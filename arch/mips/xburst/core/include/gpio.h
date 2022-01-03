@@ -24,7 +24,9 @@
 #endif
 int irq_to_gpio(unsigned irq);
 
+#ifndef ARCH_NR_GPIOS
 #define ARCH_NR_GPIOS	256
+#endif
 
 #include <asm-generic/gpio.h>		/* cansleep wrappers */
 
