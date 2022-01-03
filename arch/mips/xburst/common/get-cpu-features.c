@@ -16,7 +16,7 @@ static int cpu_proc_show(struct seq_file *m, void *v)
 {
 	int len = 0;
 
-#define PRINT(ARGS...) len += seq_printf (m, ##ARGS)
+#define PRINT(ARGS...) seq_printf (m, ##ARGS)
 
 #define PRT0(X,Y) PRINT("#define " "%s()\t(%d * 1024)\n",#X,(Y)/1024)
 #define PRT1(X,Y) PRINT("#define " "%s()\t%d\n",#X,(Y))
