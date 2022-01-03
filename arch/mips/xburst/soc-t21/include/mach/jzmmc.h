@@ -2,7 +2,7 @@
 #define __JZ_MMC_H__
 
 #include <linux/regulator/consumer.h>
-#include <linux/wakelock.h>
+// #include <linux/wakelock.h>
 #include <soc/gpio.h>
 #include <gpio.h>
 

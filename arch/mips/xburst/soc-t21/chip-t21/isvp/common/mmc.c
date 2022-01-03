@@ -1,7 +1,7 @@
 #include <linux/mmc/host.h>
 #include <linux/regulator/consumer.h>
 #include <linux/gpio.h>
-#include <linux/wakelock.h>
+// #include <linux/wakelock.h>
 #include <linux/err.h>
 #include <linux/delay.h>
 
