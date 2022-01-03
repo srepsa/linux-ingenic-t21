@@ -133,12 +133,12 @@ static int pmon_write_proc(struct file *file, const char __user *buffer,
 	return count;
 }
 
-static const struct file_operations gpios_proc_fops ={
-	.read = seq_read,
-	.open = pmon_open,
-	.write = pmon_write_proc,
-	.llseek = seq_lseek,
-	.release = single_release,
+static const struct proc_ops gpios_proc_fops ={
+	.proc_read = seq_read,
+	.proc_open = pmon_open,
+	.proc_write = pmon_write_proc,
+	.proc_lseek = seq_lseek,
+	.proc_release = single_release,
 };
 static int __init init_proc_pmon(void)
 {

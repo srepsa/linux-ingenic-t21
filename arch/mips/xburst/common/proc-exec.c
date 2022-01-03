@@ -50,10 +50,10 @@ static int exec_write_proc(struct file *file, const char __user *buffer, size_t 
 	return count;
 }
 
-static const struct file_operations exec_proc_fops ={
-	.write = exec_write_proc,
-	.llseek = seq_lseek,
-	.release = single_release,
+static const struct proc_ops exec_proc_fops ={
+	.proc_write = exec_write_proc,
+	.proc_lseek = seq_lseek,
+	.proc_release = single_release,
 };
 static int __init init_proc_exec(void)
 {

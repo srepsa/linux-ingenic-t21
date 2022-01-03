@@ -323,35 +323,35 @@ static int ddr_mon3_proc_open(struct inode *inode, struct file *file)
 	return single_open(file, ddr_mon3_proc_read, PDE_DATA(inode));
 }
 
-static const struct file_operations ddr_register_proc_fops ={
-	.read = seq_read,
-	.open = ddr_register_proc_open,
-	.llseek = seq_lseek,
-	.release = single_release,
+static const struct proc_ops ddr_register_proc_fops ={
+	.proc_read = seq_read,
+	.proc_open = ddr_register_proc_open,
+	.proc_lseek = seq_lseek,
+	.proc_release = single_release,
 };
 
-static const struct file_operations ddr_mon1_proc_fops ={
-	.read = seq_read,
-	.open = ddr_mon1_proc_open,
-	.write = ddr_mon1_proc_write,
-	.llseek = seq_lseek,
-	.release = single_release,
+static const struct proc_ops ddr_mon1_proc_fops ={
+	.proc_read = seq_read,
+	.proc_open = ddr_mon1_proc_open,
+	.proc_write = ddr_mon1_proc_write,
+	.proc_lseek = seq_lseek,
+	.proc_release = single_release,
 };
 
-static const struct file_operations ddr_mon2_proc_fops ={
-	.read = seq_read,
-	.open = ddr_mon2_proc_open,
-	.write = ddr_mon2_proc_write,
-	.llseek = seq_lseek,
-	.release = single_release,
+static const struct proc_ops ddr_mon2_proc_fops ={
+	.proc_read = seq_read,
+	.proc_open = ddr_mon2_proc_open,
+	.proc_write = ddr_mon2_proc_write,
+	.proc_lseek = seq_lseek,
+	.proc_release = single_release,
 };
 
-static const struct file_operations ddr_mon3_proc_fops ={
-	.read = seq_read,
-	.open = ddr_mon3_proc_open,
-	.write = ddr_mon3_proc_write,
-	.llseek = seq_lseek,
-	.release = single_release,
+static const struct proc_ops ddr_mon3_proc_fops ={
+	.proc_read = seq_read,
+	.proc_open = ddr_mon3_proc_open,
+	.proc_write = ddr_mon3_proc_write,
+	.proc_lseek = seq_lseek,
+	.proc_release = single_release,
 };
 
 static int __init init_ddr_proc(void)

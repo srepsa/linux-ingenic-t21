@@ -330,28 +330,28 @@ static int wdt_time_write_proc(struct file *file, const char __user *buffer,
 	return count;
 }
 
-static const struct file_operations reset_proc_fops ={
-	.read = seq_read,
-	.open = reset_proc_open,
-	.write = reset_write_proc,
-	.llseek = seq_lseek,
-	.release = single_release,
+static const struct proc_ops reset_proc_fops ={
+	.proc_read = seq_read,
+	.proc_open = reset_proc_open,
+	.proc_write = reset_write_proc,
+	.proc_lseek = seq_lseek,
+	.proc_release = single_release,
 };
 
-static const struct file_operations wdt_control_proc_fops ={
-	.read = seq_read,
-	.open = wdt_control_proc_open,
-	.write = wdt_control_write_proc,
-	.llseek = seq_lseek,
-	.release = single_release,
+static const struct proc_ops wdt_control_proc_fops ={
+	.proc_read = seq_read,
+	.proc_open = wdt_control_proc_open,
+	.proc_write = wdt_control_write_proc,
+	.proc_lseek = seq_lseek,
+	.proc_release = single_release,
 };
 
-static const struct file_operations wdt_time_proc_fops ={
-	.read = seq_read,
-	.open = wdt_time_proc_open,
-	.write = wdt_time_write_proc,
-	.llseek = seq_lseek,
-	.release = single_release,
+static const struct proc_ops wdt_time_proc_fops ={
+	.proc_read = seq_read,
+	.proc_open = wdt_time_proc_open,
+	.proc_write = wdt_time_write_proc,
+	.proc_lseek = seq_lseek,
+	.proc_release = single_release,
 };
 
 static int wdt_probe(struct platform_device *pdev)

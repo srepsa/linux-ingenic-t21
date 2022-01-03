@@ -908,11 +908,11 @@ static int gpio_open(struct inode *inode, struct file *file)
 {
 	return single_open(file, gpio_proc_show, PDE_DATA(inode));
 }
-static const struct file_operations gpios_proc_fops ={
-	.read = seq_read,
-	.open = gpio_open,
-	.llseek = seq_lseek,
-	.release = single_release,
+static const struct proc_ops gpios_proc_fops ={
+	.proc_read = seq_read,
+	.proc_open = gpio_open,
+	.proc_lseek = seq_lseek,
+	.proc_release = single_release,
 };
 
 static int __init init_gpio_proc(void)

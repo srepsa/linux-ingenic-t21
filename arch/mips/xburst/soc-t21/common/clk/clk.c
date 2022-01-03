@@ -386,27 +386,27 @@ static int rate_open(struct inode *inode, struct file *file)
 	return single_open(file, rate_show, PDE_DATA(inode));
 }
 
-static const struct file_operations clocks_proc_fops ={
-	.read = seq_read,
-	.open = clocks_open,
-	.llseek = seq_lseek,
-	.release = single_release,
+static const struct proc_ops clocks_proc_fops ={
+	.proc_read = seq_read,
+	.proc_open = clocks_open,
+	.proc_lseek = seq_lseek,
+	.proc_release = single_release,
 };
 
-static const struct file_operations enable_fops ={
-	.read = seq_read,
-	.open = enable_open,
-	.write = enable_write,
-	.llseek = seq_lseek,
-	.release = single_release,
+static const struct proc_ops enable_fops ={
+	.proc_read = seq_read,
+	.proc_open = enable_open,
+	.proc_write = enable_write,
+	.proc_lseek = seq_lseek,
+	.proc_release = single_release,
 };
 
-static const struct file_operations rate_fops ={
-	.read = seq_read,
-        .open = rate_open,
-	.write = rate_write,
-	.llseek = seq_lseek,
-	.release = single_release,
+static const struct proc_ops rate_fops ={
+	.proc_read = seq_read,
+    .proc_open = rate_open,
+	.proc_write = rate_write,
+	.proc_lseek = seq_lseek,
+	.proc_release = single_release,
 };
 struct  freq_udelay_jiffy *freq_udelay_jiffys;
 #ifdef CONFIG_CPU_FREQ

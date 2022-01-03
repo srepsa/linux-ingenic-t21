@@ -120,7 +120,7 @@ struct jz_driver_common_interfaces {
 	int (*priv_misc_deregister)(struct miscdevice *mdev);
 	struct proc_dir_entry *(*priv_proc_create_data)(const char *name, umode_t mode,
 					struct proc_dir_entry *parent,
-					const struct file_operations *proc_fops,
+					const struct proc_ops *proc_fops,
 					void *data);
 	/* proc */
 	ssize_t (*priv_seq_read)(struct file *file, char __user *buf, size_t size, loff_t *ppos);

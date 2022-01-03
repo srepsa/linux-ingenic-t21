@@ -84,11 +84,11 @@ static int cpu_open(struct inode *inode, struct file *file)
 {
 	return single_open(file, cpu_proc_show, PDE_DATA(inode));
 }
-static const struct file_operations cpu_proc_fops ={
-	.read = seq_read,
-	.open = cpu_open,
-	.llseek = seq_lseek,
-	.release = single_release,
+static const struct proc_ops cpu_proc_fops ={
+	.proc_read = seq_read,
+	.proc_open = cpu_open,
+	.proc_lseek = seq_lseek,
+	.proc_release = single_release,
 };
 static int __init init_cpu_features(void)
 {

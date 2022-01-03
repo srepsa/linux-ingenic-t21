@@ -123,12 +123,12 @@ static int watch_proc_open(struct inode *inode, struct file *file)
 	return single_open(file, watch_proc_show, PDE_DATA(inode));
 }
 
-static const struct file_operations watch_proc_fops ={
-	.read = seq_read,
-	.open = watch_proc_open,
-	.write = watch_write_proc,
-	.llseek = seq_lseek,
-	.release = single_release,
+static const struct proc_ops watch_proc_fops ={
+	.proc_read = seq_read,
+	.proc_open = watch_proc_open,
+	.proc_write = watch_write_proc,
+	.proc_lseek = seq_lseek,
+	.proc_release = single_release,
 };
 
 static int __init jz_trace_proc(void)
