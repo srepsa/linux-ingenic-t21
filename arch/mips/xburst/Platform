@@ -2,3 +2,5 @@
 # XBurst machines
 #
 load-$(CONFIG_MACH_XBURST)	+= 0xffffffff80010000
+cflags-$(CONFIG_MACH_XBURST)	+= -I$(srctree)/arch/mips/xburst/core/include/
+cflags-$(CONFIG_SOC_T21)	+= -I$(srctree)/arch/mips/xburst/soc-t21/include/
