@@ -105,6 +105,12 @@ else
 VMLINUZ_LOAD_ADDRESS = $(shell $(obj)/calc_vmlinuz_load_addr \
 		$(obj)/vmlinux.bin $(LINKER_LOAD_ADDRESS))
 endif
+
+# Ingenic hack; this address is hardcoded
+ifeq ($(CONFIG_MACH_XBURST),y)
+	VMLINUZ_LOAD_ADDRESS := 0x80600000
+endif
+
 UIMAGE_LOADADDR = $(VMLINUZ_LOAD_ADDRESS)
 
 vmlinuzobjs-y += $(obj)/piggy.o

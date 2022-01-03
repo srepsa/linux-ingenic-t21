@@ -1,0 +1,4 @@
+#
+# XBurst machines
+#
+load-$(CONFIG_MACH_XBURST)	+= 0xffffffff80010000
