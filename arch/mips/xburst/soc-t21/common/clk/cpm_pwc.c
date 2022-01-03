@@ -5,6 +5,7 @@
 #include <linux/delay.h>
 #include <linux/err.h>
 #include <linux/list.h>
+#include <linux/module.h>
 #include <linux/timer.h>
 #include <linux/sort.h>
 #include <linux/bsearch.h>

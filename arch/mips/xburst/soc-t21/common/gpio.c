@@ -11,6 +11,7 @@
 #include <linux/init.h>
 #include <linux/interrupt.h>
 #include <linux/ioport.h>
+#include <linux/module.h>
 #include <linux/gpio.h>
 #include <linux/proc_fs.h>
 #include <linux/syscore_ops.h>

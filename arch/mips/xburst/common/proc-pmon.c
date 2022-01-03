@@ -1,4 +1,5 @@
 #include <linux/proc_fs.h>
+#include <linux/module.h>
 #include <asm/mipsregs.h>
 #include <asm/uaccess.h>
 #include <linux/seq_file.h>

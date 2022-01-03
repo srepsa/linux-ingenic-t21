@@ -5,6 +5,7 @@
 #include <linux/tty.h>
 #include <linux/delay.h>
 #include <linux/proc_fs.h>
+#include <linux/module.h>
 #include <linux/kthread.h>
 #include <linux/syscore_ops.h>
 #include <linux/platform_device.h>

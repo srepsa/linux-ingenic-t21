@@ -1,6 +1,7 @@
 #include <linux/proc_fs.h>
 #include <linux/syscalls.h>
 #include <linux/kmod.h>
+#include <linux/module.h>
 #include <asm/uaccess.h>
 #include <linux/seq_file.h>
 static int exec_write_proc(struct file *file, const char __user *buffer, size_t count, loff_t *data)
