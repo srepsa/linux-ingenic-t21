@@ -190,6 +190,16 @@
 #define PRID_IMP_XBURST_REV2	0x0100	/* XBurst®1 with MXU2.0 SIMD ISA		*/
 #define PRID_IMP_XBURST2		0x2000	/* XBurst®2 with MXU2.1 SIMD ISA		*/
 
+#define PRID_CPU_FEATURE_MASK       0xFFF00000
+#define PRID_CPU_CHIPS_MASK         0x000FF000
+#define PRID_CPU_ISA_MASK           0x00000FFF
+
+#define PRID_IMP_JZRISC             0x00010000
+#define PRID_IMP_JZ4775             0x2ed00000
+#define PRID_IMP_JZ4780             0x3ee00000
+#define PRID_IMP_M200               0x7ae00000
+#define PRID_IMP_ISA_R2             0x0000024f
+
 /*
  * These are the PRID's for when 23:16 == PRID_COMP_NETLOGIC
  */
@@ -335,6 +345,8 @@ enum cpu_type_enum {
 	CPU_LAST
 };
 
+#define MIPS_FTLB_CAPABLE       0x1
+
 #endif /* !__ASSEMBLY */
 
 /*
@@ -428,6 +440,8 @@ enum cpu_type_enum {
 #define MIPS_CPU_MAC_2008_ONLY	BIT_ULL(60)	/* CPU Only support MAC2008 Fused multiply-add instruction */
 #define MIPS_CPU_FTLBPAREX	BIT_ULL(61)	/* CPU has FTLB parity exception */
 #define MIPS_CPU_GSEXCEX	BIT_ULL(62)	/* CPU has GSExc exception */
+#define MIPS_CPU_CM2            0x10000000 /* CPU has CM2 */
+#define MIPS_CPU_CM2_L2SYNC     0x20000000 /* CPU has CM2 L2-only SYNC feature */
 
 /*
  * CPU ASE encodings
@@ -447,5 +461,7 @@ enum cpu_type_enum {
 #define MIPS_ASE_LOONGSON_CAM	0x00001000 /* Loongson CAM */
 #define MIPS_ASE_LOONGSON_EXT	0x00002000 /* Loongson EXTensions */
 #define MIPS_ASE_LOONGSON_EXT2	0x00004000 /* Loongson EXTensions R2 */
+#define MIPS_ASE_XBURSTMXU	0x80000000 /* MIPS Xburst eXtended enhanced Unit */
+#define MIPS_ASE_XBURSTMXUV2	0x40000000 /* MIPS Xburst eXtended enhanced Unit V2 */
 
 #endif /* _ASM_CPU_H */

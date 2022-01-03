@@ -81,6 +81,7 @@ extern unsigned long mips_stack_top(void);
 
 
 #define NUM_FPU_REGS	32
+#define NUM_MXU_REGS	16
 
 #ifdef CONFIG_CPU_HAS_MSA
 # define FPU_REG_WIDTH	128
@@ -91,6 +92,10 @@ extern unsigned long mips_stack_top(void);
 union fpureg {
 	__u32	val32[FPU_REG_WIDTH / 32];
 	__u64	val64[FPU_REG_WIDTH / 64];
+};
+
+struct xburst_mxu_struct {
+	unsigned int regs[NUM_MXU_REGS];
 };
 
 #ifdef CONFIG_CPU_LITTLE_ENDIAN
@@ -207,7 +212,27 @@ struct octeon_cvmseg_state {
 			    [cpu_dcache_line_size() / sizeof(unsigned long)];
 };
 
-#elif defined(CONFIG_CPU_XLP)
+#endif
+
+#ifdef CONFIG_MACH_XBURST
+typedef union {
+	u64 val64[2];
+} vpr_t;
+
+struct xburst_cop2_state {
+	u32 mxu_csr;
+	vpr_t vr[32];
+};
+#endif
+
+#ifdef CONFIG_PMON_DEBUG
+struct xburst_perf_cnt {
+	u32 perfctrl;
+	u64 perfcnt;
+};
+#endif
+
+#if defined(CONFIG_CPU_XLP)
 struct nlm_cop2_state {
 	u64	rx[4];
 	u64	tx[4];
@@ -217,9 +242,19 @@ struct nlm_cop2_state {
 
 #define COP2_INIT						\
 	.cp2			= {{0}, {0}, 0, 0},
+#elif defined(CONFIG_MACH_XBURST)
+#define COP2_INIT						\
+	.cp2			= {0},
 #else
 #define COP2_INIT
 #endif
+
+#ifdef CONFIG_PMON_DEBUG
+#define PFC_INIT						\
+	.pfc			= {{0, 0}, {0, 0}},
+#else
+#define PFC_INIT
+#endif /* CONFIG_MACH_XBURST */
 
 #ifdef CONFIG_CPU_HAS_MSA
 # define ARCH_MIN_TASKALIGN	16
@@ -263,6 +298,15 @@ struct thread_struct {
 	/* Saved state of the DSP ASE, if available. */
 	struct mips_dsp_state dsp;
 
+	/* Saved registers of the MXU, if available. */
+	struct xburst_mxu_struct mxu;
+
+	/* for magicode cpuinfo */
+#define CPU_MIPS             0
+#define CPU_ARM              1
+#define CPU_ARM_NEON         2
+	unsigned int mcflags;
+
 	/* Saved watch register state, if available. */
 	union mips_watch_reg_state watch;
 
@@ -274,6 +318,12 @@ struct thread_struct {
 #ifdef CONFIG_CPU_CAVIUM_OCTEON
 	struct octeon_cop2_state cp2 __attribute__ ((__aligned__(128)));
 	struct octeon_cvmseg_state cvmseg __attribute__ ((__aligned__(128)));
+#endif
+#ifdef CONFIG_MACH_XBURST
+	struct xburst_cop2_state cp2;
+#endif
+#ifdef CONFIG_PMON_DEBUG
+	struct xburst_perf_cnt pfc[2];
 #endif
 #ifdef CONFIG_CPU_XLP
 	struct nlm_cop2_state cp2;
@@ -353,6 +403,7 @@ struct thread_struct {
 	 * Platform specific cop2 registers(null if no COP2)	\
 	 */							\
 	COP2_INIT						\
+	PFC_INIT						\
 }
 
 struct task_struct;

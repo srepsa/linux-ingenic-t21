@@ -88,6 +88,8 @@ enum ingenic_machine_type {
 	MACH_INGENIC_X2100,
 };
 
+#define  MACH_XBURST		2	/* Xburst based SOC	*/
+
 extern char *system_type;
 const char *get_system_type(void);
 
