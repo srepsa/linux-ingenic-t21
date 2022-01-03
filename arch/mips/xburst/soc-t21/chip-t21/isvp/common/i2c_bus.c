@@ -1,8 +1,8 @@
 #include <linux/platform_device.h>
 #include <linux/i2c.h>
-#include <linux/i2c-gpio.h>
+#include <linux/platform_data/i2c-gpio.h>
 #include <linux/interrupt.h>
-#include <linux/i2c/pca953x.h>
+#include <linux/platform_data/pca953x.h>
 #include "board_base.h"
 #include "mach/jzsnd.h"
 

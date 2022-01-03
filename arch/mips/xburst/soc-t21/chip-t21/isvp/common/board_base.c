@@ -1,11 +1,11 @@
 #include <linux/platform_device.h>
 #include <linux/i2c.h>
-#include <linux/i2c-gpio.h>
+#include <linux/platform_data/i2c-gpio.h>
 #include <linux/input.h>
 #include <linux/spi/spi.h>
 #include <linux/spi/spi_gpio.h>
 #include <linux/interrupt.h>
-#include <linux/jz_dwc.h>
+// #include <linux/jz_dwc.h>
 #include <linux/delay.h>
 #include <mach/jzsnd.h>
 #include <mach/platform.h>

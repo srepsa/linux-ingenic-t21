@@ -2,7 +2,7 @@
 #define __BOARD_H__
 #include <gpio.h>
 #include <soc/gpio.h>
-#include <linux/jz_dwc.h>
+//#include <linux/jz_dwc.h>
 
 /* ****************************GPIO I2C START******************************** */
 #ifdef CONFIG_SOFT_I2C0_GPIO_V12_JZ
