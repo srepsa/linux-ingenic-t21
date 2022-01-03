@@ -48,8 +48,8 @@ int __init setup_init(void)
 
 	return 0;
 }
-void __cpuinit jzcpu_timer_setup(void);
-void __cpuinit jz_clocksource_init(void);
+void jzcpu_timer_setup(void);
+void jz_clocksource_init(void);
 void __init init_all_clk(void);
 /* used by linux-mti code */
 

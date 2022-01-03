@@ -61,7 +61,7 @@ static struct cpumask *cpu_ready;
 static unsigned long boot_sp, boot_gp;
 static void *scpu_pwc = NULL;
 /* Special cp0 register init */
-static void __cpuinit jzsoc_smp_init(void)
+static void jzsoc_smp_init(void)
 {
 	unsigned int imask = STATUSF_IP3 | STATUSF_IP2 |
 		STATUSF_IP1 | STATUSF_IP0;
@@ -71,11 +71,11 @@ static void __cpuinit jzsoc_smp_init(void)
 /*
  * Code to run on secondary just after probing the CPU
  */
-extern void __cpuinit jzcpu_timer_setup(void);
+extern void jzcpu_timer_setup(void);
 extern void percpu_timer_stop(void);
 
 void percpu_timer_setup(void);
-static void __cpuinit jzsoc_init_secondary(void)
+static void jzsoc_init_secondary(void)
 {
 	int cpu = smp_processor_id();
 	smp_disable_interrupt(cpu);
@@ -90,7 +90,7 @@ static void __cpuinit jzsoc_init_secondary(void)
  * loop
  */
 extern void percpu_timer_cpu_affinity(void);
-static void __cpuinit jzsoc_smp_finish(void)
+static void jzsoc_smp_finish(void)
 {
 	int cpu = smp_processor_id();
 	cpu_reim |= (1 << cpu);
@@ -170,7 +170,7 @@ static int cpu_boot(int cpu, unsigned long sp, unsigned long gp)
  * running!
  */
 extern void __jzsoc_secondary_start(void);
-static void __cpuinit jzsoc_boot_secondary(int cpu, struct task_struct *idle)
+static void jzsoc_boot_secondary(int cpu, struct task_struct *idle)
 {
 	int err;
 	unsigned long flags,ctrl;

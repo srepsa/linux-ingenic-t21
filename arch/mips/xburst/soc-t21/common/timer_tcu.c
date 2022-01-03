@@ -118,7 +118,7 @@ unsigned long long sched_clock(void)
 	return ((cycle_t)jz_get_cycles(0) * tmr_src.cs.mult) >> tmr_src.cs.shift;
 }
 
-void __cpuinit jz_clocksource_init(void)
+void jz_clocksource_init(void)
 {
 	struct clk *ext_clk = clk_get(NULL,"ext1");
 	tmr_src.cs.mult =
@@ -271,7 +271,7 @@ static void jz_clockevent_init(struct jz_timerevent *evt_dev) {
 	printk("clockevents_config_and_register success.\n");
 }
 
-void __cpuinit jzcpu_timer_setup(void)
+void jzcpu_timer_setup(void)
 {
 	struct jz_timerevent *evt = &jzclockevent;
 
