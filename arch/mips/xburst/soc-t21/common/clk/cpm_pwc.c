@@ -1,5 +1,5 @@
 #include <linux/spinlock.h>
-#include <linux/wakelock.h>
+#include <linux/pm_wakeup.h>
 #include <linux/io.h>
 #include <linux/clk.h>
 #include <linux/delay.h>
@@ -25,7 +25,7 @@ struct cpm_pwc
 };
 struct cpm_pwc_ctrl {
 	spinlock_t spin_lock;
-	struct  wake_lock  pwc_wakelock;
+	struct  wakeup_source  pwc_wakelock;
 	unsigned int is_suspend;
 }cpm_pwc_ctrl;
 static struct cpm_pwc cpm_pwc_srcs[] = {
@@ -99,7 +99,7 @@ int cpm_pwc_enable_ctrl(struct clk *clk,int on) {
 	} else {
 		if(cpm_pwc_ctrl.is_suspend == 0 && pwc->delay_ms){
 			mod_timer(&pwc->timer,jiffies + msecs_to_jiffies(pwc->delay_ms));
-			wake_lock_timeout(&cpm_pwc_ctrl.pwc_wakelock,msecs_to_jiffies(pwc->delay_ms));
+			__pm_wakeup_event(&cpm_pwc_ctrl.pwc_wakelock,pwc->delay_ms);
 		}
 		else
 			cpm_pwc_poweroff((unsigned long)pwc);
@@ -165,7 +165,7 @@ static int __init cpm_pwc_dev_init(void)
 {
 	int i;
 	cpm_pwc_ctrl.is_suspend = 0;
-	wake_lock_init(&cpm_pwc_ctrl.pwc_wakelock,WAKE_LOCK_SUSPEND,"pwc wakelock");
+	wakeup_source_init(&cpm_pwc_ctrl.pwc_wakelock,"pwc wakelock");
 	for(i = 0;i < ARRAY_SIZE(cpm_pwc_srcs);i++) {
 		setup_timer(&cpm_pwc_srcs[i].timer,cpm_pwc_poweroff,(unsigned long)&cpm_pwc_srcs[i]);
 	}
