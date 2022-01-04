@@ -124,7 +124,7 @@ void jz_clocksource_init(void)
 	tmr_src.cs.mult =
 		clocksource_hz2mult(clk_get_rate(ext_clk) / CLKSOURCE_DIV, tmr_src.cs.shift);
 	clk_put(ext_clk);
-	clocksource_register(&tmr_src.cs);
+	__clocksource_register(&tmr_src.cs);
 	tmr_src.clk_gate = clk_get(NULL,"tcu");
 	if(IS_ERR(tmr_src.clk_gate)) {
 		tmr_src.clk_gate = NULL;
@@ -183,7 +183,7 @@ static int jz_set_next_event(unsigned long evt,
 	return 0;
 }
 
-static void jz_set_mode(enum clock_event_mode mode,
+static void jz_set_mode(enum clock_event_state mode,
 			struct clock_event_device *clkevt)
 {
 	struct jz_timerevent *evt_dev = container_of(clkevt,struct jz_timerevent,clkevt);
@@ -191,23 +191,23 @@ static void jz_set_mode(enum clock_event_mode mode,
 	unsigned int latch = (evt_dev->rate + (HZ >> 1)) / HZ;
 	spin_lock_irqsave(&evt_dev->lock,flags);
 	switch (mode) {
-		case CLOCK_EVT_MODE_PERIODIC:
+		case CLOCK_EVT_STATE_PERIODIC:
 			if(!clk_is_enabled(evt_dev->clk_gate))
 				clk_enable(evt_dev->clk_gate);
 			evt_dev->curmode = mode;
 			resettimer(latch - 1);
 			break;
-		case CLOCK_EVT_MODE_ONESHOT:
+		case CLOCK_EVT_STATE_ONESHOT:
 			evt_dev->curmode = mode;
 			break;
-		case CLOCK_EVT_MODE_UNUSED:
-		case CLOCK_EVT_MODE_SHUTDOWN:
+		case CLOCK_EVT_STATE_DETACHED:
+		case CLOCK_EVT_STATE_SHUTDOWN:
 			stoptimer();
 			if(evt_dev->clk_gate)
 				clk_disable(evt_dev->clk_gate);
 			break;
 
-		case CLOCK_EVT_MODE_RESUME:
+		case CLOCK_EVT_STATE_ONESHOT_STOPPED:
 			if(evt_dev->clk_gate)
 				clk_enable(evt_dev->clk_gate);
 			restarttimer();
@@ -223,7 +223,7 @@ static irqreturn_t jz_timer_interrupt(int irq, void *dev_id)
 
 	if(tcu_readl(TCU_TFR) & ctrlbit) {
 		tcu_writel(TCU_TFCR,ctrlbit);
-		if(evt_dev->curmode == CLOCK_EVT_MODE_ONESHOT) {
+		if(evt_dev->curmode == CLOCK_EVT_STATE_ONESHOT) {
 			stoptimer();
 		}
 		evt_dev->clkevt.event_handler(&evt_dev->clkevt);
@@ -249,12 +249,12 @@ static void jz_clockevent_init(struct jz_timerevent *evt_dev) {
 	tcu_writel(CH_TCSR(CLKEVENT_CH),CSRDIV(CLKEVENT_DIV) | CSR_EXT_EN);
 	evt_dev->evt_action.handler = jz_timer_interrupt;
 	evt_dev->evt_action.thread_fn = NULL;
-	evt_dev->evt_action.flags = IRQF_DISABLED | IRQF_TIMER;
+	evt_dev->evt_action.flags = IRQF_TIMER;
 	evt_dev->evt_action.name = "jz-timerirq";
 	evt_dev->evt_action.dev_id = (void*)evt_dev;
 
-	if(setup_irq(IRQ_TCU1, &evt_dev->evt_action) < 0) {
-		pr_err("timer request irq error\n");
+	if(request_irq(IRQ_TCU1, jz_timer_interrupt, IRQF_TIMER, "jz-timerirq", (void*)evt_dev) < 0) {
+		pr_err("timer request ost error\n");
 		BUG();
 	}
 

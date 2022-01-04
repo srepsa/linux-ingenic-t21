@@ -427,11 +427,11 @@ int __init tcu_init(void)
 	mutex_init(&jz47xx_tcu->lock);
 
 #ifndef RESERVED_CH
-	if (0 != (ret =request_irq(IRQ_TCU1, tcu_irqhandler,IRQF_DISABLED, "tcu1",NULL))) {
+	if (0 != (ret =request_irq(IRQ_TCU1, tcu_irqhandler,0, "tcu1",NULL))) {
 		printk(KERN_INFO "tcu_timer :%s request irq error !\n ","tcu1");
 		return ret;
 	}
-	if (0 != (ret = request_irq(IRQ_TCU2, tcu_irqhandler,IRQF_DISABLED, "tcu2", NULL))) {
+	if (0 != (ret = request_irq(IRQ_TCU2, tcu_irqhandler,0, "tcu2", NULL))) {
 		printk(KERN_INFO "tcu_timer :%s request irq error !\n ","tcu2");
 		return ret;
 	}

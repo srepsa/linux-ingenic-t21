@@ -627,7 +627,7 @@ int mcu_gpio_register(unsigned int reg) {
 	for(i = 0;i < ARRAY_SIZE(jz_gpio_chips); i++) {
 		jz_gpio_chips[i].mcu_gpio_reg =(unsigned int *)reg + i;
 
-		ret = request_irq(IRQ_MCU_GPIO_PORT(i), mcu_gpio_handler, IRQF_DISABLED,"mcu gpio irq",
+		ret = request_irq(IRQ_MCU_GPIO_PORT(i), mcu_gpio_handler, 0,"mcu gpio irq",
 				  (void*)&jz_gpio_chips[i]);
 		if (ret) {
 			pr_err("mcu irq[%d] register error!\n",i);
@@ -641,7 +641,7 @@ static int __init setup_gpio_irq(void)
 	int i, j;
 
 	for (i = 0; i < ARRAY_SIZE(jz_gpio_chips); i++) {
-		if (request_irq(IRQ_GPIO_PORT(i), gpio_handler, IRQF_DISABLED,
+		if (request_irq(IRQ_GPIO_PORT(i), gpio_handler, 0,
 				jz_gpio_chips[i].irq_chip.name,
 				(void*)&jz_gpio_chips[i]))
 			continue;

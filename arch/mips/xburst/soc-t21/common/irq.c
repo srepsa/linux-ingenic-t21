@@ -124,10 +124,10 @@ static irqreturn_t ipi_call_function(int irq, void *d)
 
 static int setup_ipi(void)
 {
-	if (request_irq(IRQ_SMP_RESCHEDULE_YOURSELF, ipi_reschedule, IRQF_DISABLED,
+	if (request_irq(IRQ_SMP_RESCHEDULE_YOURSELF, ipi_reschedule, 0,
 				"ipi_reschedule", NULL))
 		BUG();
-	if (request_irq(IRQ_SMP_CALL_FUNCTION, ipi_call_function, IRQF_DISABLED,
+	if (request_irq(IRQ_SMP_CALL_FUNCTION, ipi_call_function, 0,
 				"ipi_call_function", NULL))
 		BUG();
 
