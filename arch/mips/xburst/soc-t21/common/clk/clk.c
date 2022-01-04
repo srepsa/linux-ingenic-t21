@@ -128,7 +128,7 @@ void __init init_all_clk(void)
 			clk_srcs[CLK_ID_H2CLK].rate/1000/1000,
 			clk_srcs[CLK_ID_PCLK].rate/1000/1000);
 }
-struct clk *clk_get(struct device *dev, const char *id)
+struct clk __attribute__((weak)) *clk_get(struct device *dev, const char *id)
 {
 	int i;
 	struct clk *retval = NULL;
@@ -154,7 +154,7 @@ struct clk *clk_get(struct device *dev, const char *id)
 	}
 	return ERR_PTR(-EINVAL);
 }
-EXPORT_SYMBOL(clk_get);
+//EXPORT_SYMBOL(clk_get);
 
 int clk_enable(struct clk *clk)
 {
@@ -238,7 +238,7 @@ unsigned long clk_get_rate(struct clk *clk)
 }
 EXPORT_SYMBOL(clk_get_rate);
 
-void clk_put(struct clk *clk)
+void __attribute__((weak)) clk_put(struct clk *clk)
 {
 	struct clk *parent_clk;
 	if(clk && !(clk->flags & CLK_FLG_NOALLOC)) {
@@ -256,7 +256,7 @@ void clk_put(struct clk *clk)
 		kfree(clk);
 	}
 }
-EXPORT_SYMBOL(clk_put);
+//EXPORT_SYMBOL(clk_put);
 
 int clk_set_rate(struct clk *clk, unsigned long rate)
 {
