@@ -138,7 +138,7 @@ static int __init jz_trace_proc(void)
 
 	p = jz_proc_mkdir("debug");
 	if (!p) {
-		pr_warning("create_proc_entry for debug failed.\n");
+		pr_warn("create_proc_entry for debug failed.\n");
 		return -ENODEV;
 	}
 

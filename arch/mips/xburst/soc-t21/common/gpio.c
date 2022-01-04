@@ -921,7 +921,7 @@ static int __init init_gpio_proc(void)
 	struct proc_dir_entry *p;
 	p = jz_proc_mkdir("gpio");
 	if (!p) {
-		pr_warning("create_proc_entry for common gpio failed.\n");
+		pr_warn("create_proc_entry for common gpio failed.\n");
 		return -ENODEV;
 	}
 	proc_create("gpios", 0600,p,&gpios_proc_fops);

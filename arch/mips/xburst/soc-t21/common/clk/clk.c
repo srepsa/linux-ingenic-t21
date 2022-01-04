@@ -489,7 +489,7 @@ static int __init init_clk_proc(void)
 
 	p = jz_proc_mkdir("clock");
 	if (!p) {
-		pr_warning("create_proc_entry for common clock failed.\n");
+		pr_warn("create_proc_entry for common clock failed.\n");
 		return -ENODEV;
 	}
 	proc_create_data("clocks", 0600,p,&clocks_proc_fops,0);

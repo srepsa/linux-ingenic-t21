@@ -385,7 +385,7 @@ static int __init init_ddr_proc(void)
 #endif
 	p = jz_proc_mkdir("ddr");
 	if (!p) {
-		pr_warning("create_proc_entry for common ddr failed.\n");
+		pr_warn("create_proc_entry for common ddr failed.\n");
 		return -ENODEV;
 	}
 	proc_create_data("ddr_Register", 0444, p, &ddr_register_proc_fops, 0);

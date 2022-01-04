@@ -533,7 +533,7 @@ static int __init init_dmmu_proc(void)
 	struct proc_dir_entry *p;
 	p = jz_proc_mkdir("dmmu");
 	if (!p) {
-		pr_warning("create_proc_entry for common dmmu failed.\n");
+		pr_warn("create_proc_entry for common dmmu failed.\n");
 		return -ENODEV;
 	}
 	proc_create("dmmus", 0600,p,&dmmus_proc_fops);

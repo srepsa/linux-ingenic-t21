@@ -573,7 +573,7 @@ int __init init_performance_cnter(void)
 
 	p = jz_proc_mkdir("pmon");
 	if (!p) {
-		pr_warning("create_proc_entry for common clock failed.\n");
+		pr_warn("create_proc_entry for common clock failed.\n");
 		return -ENODEV;
 	}
 

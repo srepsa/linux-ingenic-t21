@@ -377,7 +377,7 @@ static int wdt_probe(struct platform_device *pdev)
 #endif
 	p = jz_proc_mkdir("reset");
 	if (!p) {
-		pr_warning("create_proc_entry for common reset failed.\n");
+		pr_warn("create_proc_entry for common reset failed.\n");
 		return -ENODEV;
 	}
         proc_create_data("reset", 0444,p,&reset_proc_fops,wdt);
