@@ -113,4 +113,9 @@
  */
 #define Index_Writeback_Inv_V		(Cache_V | Index_Writeback_Inv)
 
+/*
+ * XBurst-specific cacheops
+ */
+#define Index_Prefetch_I	0x1c
+
 #endif	/* __ASM_CACHEOPS_H */
