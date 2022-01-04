@@ -76,7 +76,9 @@ static int watch_write_proc(struct file *file, const char __user *buffer,
 	struct task_struct *child = NULL;
 	struct watch_struct watch;
 	struct mips3264_watch_reg_state *watches;
-	copy_from_user(g_buffer,buffer,count);
+	int rv;
+	rv = (copy_from_user(g_buffer,buffer,count));
+	(void)rv;
 	g_buffer[count] = 0;
 	printk("%s\n",g_buffer);
 	s1 = g_buffer;

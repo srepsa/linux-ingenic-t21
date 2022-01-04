@@ -30,9 +30,9 @@
  *  unit: kHz
  */
 static struct timer_list timer;
-static void timercount1(unsigned long data);
-static void timercount2(unsigned long data);
-static void timercount3(unsigned long data);
+static void timercount1(struct timer_list * data);
+static void timercount2(struct timer_list * data);
+static void timercount3(struct timer_list * data);
 static int  timer_flag = 0;
 
 static int dump_out_ddr(struct seq_file *m, void *v)
@@ -116,13 +116,13 @@ static int ddr_mon1_proc_write(struct file *file, const char __user *buffer,
 		*((volatile unsigned int *)0xb34f030c) = (0x10000000 | 0x3ff);
 		msleep(1000);
 
-		setup_timer(&timer, timercount1, (unsigned long)NULL);
+		timer_setup(&timer, timercount1, 0);
 		mod_timer(&timer, jiffies+10);
 	}
 	return count;
 }
 
-static void timercount1(unsigned long data)
+static void timercount1(struct timer_list * data)
 {
 	unsigned int i = 0;
 
@@ -167,14 +167,14 @@ static int ddr_mon2_proc_write(struct file *file, const char __user *buffer,
 	}
 	if(i == 1){
 		printk("***********DDR Monitor2 START **************\n");
-		setup_timer(&timer, timercount2, (unsigned long)NULL);
+		timer_setup(&timer, timercount2, 0);
 		mod_timer(&timer, jiffies+10);
 	}
 
 	return count;
 }
 
-static void timercount2(unsigned long data)
+static void timercount2(struct timer_list * data)
 {
 	unsigned int i,j,k;
 	i = 0;
@@ -262,14 +262,14 @@ static int ddr_mon3_proc_write(struct file *file, const char __user *buffer,
 	}
 	if(i == 1){
 		printk("***********DDR Monitor3 START **************\n");
-		setup_timer(&timer, timercount3, (unsigned long)NULL);
+		timer_setup(&timer, timercount3, 0);
 		mod_timer(&timer, jiffies+10);
 	}
 
 	return count;
 }
 
-static void timercount3(unsigned long data)
+static void timercount3(struct timer_list * data)
 {
 	unsigned int i,j,k,l;
 	i = 0;
