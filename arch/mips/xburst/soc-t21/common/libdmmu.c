@@ -258,8 +258,10 @@ static int dmmu_make_present(unsigned long addr,unsigned long end)
 	vma->vm_page_prot = __pgprot(vm_page_prot | _PAGE_VALID| _PAGE_ACCESSED | _PAGE_PRESENT);
 
 	len = DIV_ROUND_UP(end, PAGE_SIZE) - addr/PAGE_SIZE;
-	ret = get_user_pages(current, current->mm, addr,
-			len, write, 0, NULL, NULL);
+	// Jim: not sure if this works?
+	ret = get_user_pages(addr, len,
+			    write ? FOLL_WRITE : 0, NULL,
+			    &vma);
 	vma->vm_page_prot = __pgprot(vm_page_prot);
 	if (ret < 0) {
 		printk("dmmu_make_present get_user_pages error(%d). addr=%lx len=%lx\n",0-ret,addr,end-addr);
