@@ -212,4 +212,5 @@ void __init init_pwc_clk(struct clk *clk);
 int cpm_pwc_enable_ctrl(struct clk *clk,int on);
 void cpm_pwc_suspend(void);
 void cpm_pwc_resume(void);
+int clk_is_enabled(struct clk *clk);
 #endif /* _CLK_H_ */
