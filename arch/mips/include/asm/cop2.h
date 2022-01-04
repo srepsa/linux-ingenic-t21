@@ -15,8 +15,8 @@
 
 extern void xburst_cop2_save(struct xburst_cop2_state *);
 extern void xburst_cop2_restore(struct xburst_cop2_state *);
-#define cop2_save(r)		xburst_cop2_save(r)
-#define cop2_restore(r)		xburst_cop2_restore(r)
+#define cop2_save(r)		xburst_cop2_save(&(r)->thread.cp2)
+#define cop2_restore(r)		xburst_cop2_restore(&(r)->thread.cp2)
 
 #define cop2_present		1
 #define cop2_lazy_restore	0

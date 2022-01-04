@@ -17,8 +17,9 @@
 #include <asm/dsp.h>
 #include <asm/cop2.h>
 #include <asm/fpu.h>
+#include <mxu.h>
+#include <asm/cop2.h>
 
-struct task_struct;
 
 /**
  * resume - resume execution of a task
@@ -31,6 +32,16 @@ struct task_struct;
  */
 extern asmlinkage struct task_struct *resume(struct task_struct *prev,
 		struct task_struct *next, struct thread_info *next_ti);
+
+#ifdef CONFIG_PMON_DEBUG
+extern void save_perf_event_jz(void *tskvoid);
+extern void restore_perf_event_jz(void *tskvoid);
+#else
+#define save_perf_event_jz(tskvoid)
+#define restore_perf_event_jz(tskvoid)
+#endif
+
+struct task_struct;
 
 extern unsigned int ll_bit;
 extern struct task_struct *ll_task;
@@ -116,6 +127,8 @@ do {									\
 		__save_dsp(prev);					\
 		__restore_dsp(next);					\
 	}								\
+	if (cpu_has_mxu)							\
+		__save_mxu(prev);						\
 	if (cop2_present) {						\
 		u32 status = read_c0_status();				\
 									\
@@ -131,6 +144,7 @@ do {									\
 		}							\
 		write_c0_status(status);				\
 	}								\
+	save_perf_event_jz(prev);					\
 	__clear_r5_hw_ll_bit();						\
 	__clear_software_ll_bit();					\
 	if (cpu_has_userlocal)						\
