@@ -32,7 +32,7 @@ char g_buffer[256];
 static int watch_proc_show(struct seq_file *m, void *v)
 {
 	int len = 0;
-	len = seq_printf(m, "%s\n",g_buffer);
+	seq_printf(m, "%s\n",g_buffer);
 
 	return len;
 }

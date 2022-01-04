@@ -306,17 +306,17 @@ static int clocks_show(struct seq_file *m, void *v)
 	int i,len=0;
 	struct clk *clk_srcs = get_clk_from_id(0);
 	if(m->private != NULL) {
-		len += seq_printf(m ,"CLKGR\t: %08x\n",cpm_inl(CPM_CLKGR));
-		len += seq_printf(m ,"CLKGR1\t: %08x\n",cpm_inl(CPM_CLKGR1));
-		len += seq_printf(m ,"LCR1\t: %08x\n",cpm_inl(CPM_LCR));
+		seq_printf(m ,"CLKGR\t: %08x\n",cpm_inl(CPM_CLKGR));
+		seq_printf(m ,"CLKGR1\t: %08x\n",cpm_inl(CPM_CLKGR1));
+		seq_printf(m ,"LCR1\t: %08x\n",cpm_inl(CPM_LCR));
 	} else {
-		len += seq_printf(m,"ID NAME       FRE        stat       count     parent\n");
+		seq_printf(m,"ID NAME       FRE        stat       count     parent\n");
 		for(i = 0; i < get_clk_sources_size(); i++) {
 			if (clk_srcs[i].name == NULL) {
-				len += seq_printf(m ,"--------------------------------------------------------\n");
+				seq_printf(m ,"--------------------------------------------------------\n");
 			} else {
 				unsigned int mhz = clk_srcs[i].rate / 1000;
-				len += seq_printf(m,"%2d %-10s %4d.%03dMHz %3sable   %d %s\n",i,clk_srcs[i].name
+				seq_printf(m,"%2d %-10s %4d.%03dMHz %3sable   %d %s\n",i,clk_srcs[i].name
 						, mhz/1000, mhz%1000
 						, clk_srcs[i].flags & CLK_FLG_ENABLE? "en": "dis"
 						, clk_srcs[i].count
@@ -362,13 +362,15 @@ static int rate_write(struct file *file, const char __user *buffer,size_t count,
 static int enable_show(struct seq_file *m, void *v)
 {
 	struct clk *clk = m->private;
-	return seq_printf(m,"%s\n",clk_is_enabled(clk) ? "enabled" : "disabled");
+	seq_printf(m,"%s\n",clk_is_enabled(clk) ? "enabled" : "disabled");
+	return 0;
 }
 
 static int rate_show(struct seq_file *m, void *v)
 {
 	struct clk *clk = m->private;
-	return seq_printf(m,"rate: %ld\n",clk_get_rate(clk));
+	seq_printf(m,"rate: %ld\n",clk_get_rate(clk));
+	return 0;
 }
 
 static int clocks_open(struct inode *inode, struct file *file)

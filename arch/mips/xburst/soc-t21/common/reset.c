@@ -210,8 +210,8 @@ static int reset_proc_show(struct seq_file *m, void *v)
 	int len = 0;
 	int i;
 	for(i = 0;i < ARRAY_SIZE(reset_command);i++)
-		len += seq_printf(m,"%s\t",reset_command[i]);
-	len += seq_printf(m,"\n");
+		seq_printf(m,"%s\t",reset_command[i]);
+	seq_printf(m,"\n");
 
 	return len;
 }
@@ -280,7 +280,7 @@ static int wdt_control_proc_show(struct seq_file *m, void *v)
 {
 	int len = 0;
 	struct wdt_reset *wdt = m->private;
-	len += seq_printf(m,wdt->stop?">off<on\n":"off>on<\n");
+	seq_printf(m,wdt->stop?">off<on\n":"off>on<\n");
 	return len;
 return 0;
 }
@@ -306,7 +306,7 @@ static int wdt_time_proc_show(struct seq_file *m, void *v)
 {
 	int len = 0;
 	struct wdt_reset *wdt = m->private;
-	len += seq_printf(m,"%d msecs\n",wdt->msecs);
+	seq_printf(m,"%d msecs\n",wdt->msecs);
 	return len;
 }
 

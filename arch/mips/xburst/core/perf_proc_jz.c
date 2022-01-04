@@ -72,10 +72,10 @@ static int perform_show(struct seq_file *m, void *v)
 		cnt0 = cnt0 - 0x30 + FSE_INDEX - 1;
 	}
 
-	len = seq_printf(m, " PERF-%s: ", abbr_perf_name[cnt0]);
+	seq_printf(m, " PERF-%s: ", abbr_perf_name[cnt0]);
 	cnt0 = read_perf_cnter_jz($25, 1);
 	cnt0 += current->thread.pfc[0].perfcnt;
-	len += seq_printf(m, "%llu\n", cnt0);
+	seq_printf(m, "%llu\n", cnt0);
 
 	cnt1 = read_perf_cnter_jz($25, 2);
 	cnt1 &= 0x7e0;
@@ -86,10 +86,10 @@ static int perform_show(struct seq_file *m, void *v)
 		cnt1 = cnt1 - 0x30 + FSE_INDEX - 1;
 	}
 
-	len += seq_printf(m, "PERF-%s: ", abbr_perf_name[cnt1]);
+	seq_printf(m, "PERF-%s: ", abbr_perf_name[cnt1]);
 	cnt1 = read_perf_cnter_jz($25, 3);
 	cnt1 += current->thread.pfc[1].perfcnt;
-	len += seq_printf(m, "%llu\n\n", cnt1);
+	seq_printf(m, "%llu\n\n", cnt1);
 
 	return len;
 }
