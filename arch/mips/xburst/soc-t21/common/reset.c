@@ -4,6 +4,7 @@
  * published by the Free Software Foundation.
  */
 #include <linux/kernel.h>
+#include <uapi/linux/sched/types.h>
 #include <linux/io.h>
 #include <linux/ioport.h>
 #include <linux/irq.h>
@@ -15,7 +16,6 @@
 #include <linux/syscore_ops.h>
 #include <linux/platform_device.h>
 #include <linux/sched/rt.h>
-#include <uapi/linux/sched.h>
 #include <linux/seq_file.h>
 #include <jz_proc.h>
 #include <jz_notifier.h>
