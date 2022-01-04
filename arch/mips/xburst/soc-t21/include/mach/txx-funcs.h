@@ -43,7 +43,7 @@ struct jz_driver_common_interfaces {
 	void (*priv_platform_device_unregister)(struct platform_device *pdev);
 	struct resource *(*priv_platform_get_resource)(struct platform_device *dev,
 				       unsigned int type, unsigned int num);
-	int (*priv_dev_set_drvdata)(struct device *dev, void *data);
+	void (*priv_dev_set_drvdata)(struct device *dev, void *data);
 	void* (*priv_dev_get_drvdata)(const struct device *dev);
 	int (*priv_platform_get_irq)(struct platform_device *dev, unsigned int num);
 	struct resource * (*tx_request_mem_region)(resource_size_t start, resource_size_t n,
@@ -59,7 +59,7 @@ struct jz_driver_common_interfaces {
 			 const char *devname, void *dev_id);
 	void (*priv_enable_irq)(unsigned int irq);
 	void (*priv_disable_irq)(unsigned int irq);
-	void (*priv_free_irq)(unsigned int irq, void *dev_id);
+	const void *(*priv_free_irq)(unsigned int irq, void *dev_id);
 
 	/* lock and mutex interface */
 	void (*tx_spin_lock_irqsave)(spinlock_t *lock, unsigned long *flags);
@@ -117,7 +117,7 @@ struct jz_driver_common_interfaces {
 
 	/* misc */
 	int (*priv_misc_register)(struct miscdevice *mdev);
-	int (*priv_misc_deregister)(struct miscdevice *mdev);
+	void (*priv_misc_deregister)(struct miscdevice *mdev);
 	struct proc_dir_entry *(*priv_proc_create_data)(const char *name, umode_t mode,
 					struct proc_dir_entry *parent,
 					const struct proc_ops *proc_fops,

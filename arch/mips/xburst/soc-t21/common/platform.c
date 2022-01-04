@@ -11,6 +11,7 @@
 #include <linux/device.h>
 #include <linux/platform_device.h>
 #include <linux/kernel.h>
+#include <linux/printk.h>
 #include <linux/init.h>
 #include <linux/resource.h>
 #include <linux/platform_data/i2c-gpio.h>
@@ -21,6 +22,8 @@
 #include <soc/base.h>
 #include <soc/irq.h>
 
+#include "clk/clk.h"
+
 #include <mach/platform.h>
 #include <mach/jzdma.h>
 #include <mach/jzsnd.h>
@@ -30,6 +33,12 @@
 #include <linux/mfd/jz_tcu.h>
 
 //#include <mach/jznand.h>
+
+/* we need pointers to functions later on, macro will not work */
+int f_platform_driver_register(struct platform_driver * drv)
+{
+	return platform_driver_register(drv);
+}
 
 /* device IO define array */
 struct jz_gpio_func_def platform_devio_array[] = {
@@ -973,9 +982,9 @@ static void get_isp_priv_mem(unsigned int *phyaddr, unsigned int *size)
 #error NOT config procfs
 #endif
 static struct jz_driver_common_interfaces private_funcs = {
-	.flags_0 = (unsigned int)&(printk),
+	.flags_0 = (unsigned int)&(_printk),
 	/* platform interface */
-	.priv_platform_driver_register = platform_driver_register,
+	.priv_platform_driver_register = f_platform_driver_register,
 	.priv_platform_driver_unregister = platform_driver_unregister,
 	.priv_platform_set_drvdata = platform_set_drvdata,
 	.priv_platform_get_drvdata = platform_get_drvdata,
@@ -1020,7 +1029,7 @@ static struct jz_driver_common_interfaces private_funcs = {
 	.priv_i2c_register_driver = i2c_register_driver,
 	.priv_i2c_del_driver = i2c_del_driver,
 
-	.priv_i2c_new_device = i2c_new_device,
+	.priv_i2c_new_device = i2c_new_client_device,
 	.priv_i2c_get_clientdata = i2c_get_clientdata,
 	.priv_i2c_set_clientdata = i2c_set_clientdata,
 	.priv_i2c_unregister_device = i2c_unregister_device,
@@ -1060,7 +1069,7 @@ static struct jz_driver_common_interfaces private_funcs = {
 
 	/* isp driver interface */
 	.get_isp_priv_mem = get_isp_priv_mem,
-	.flags_1 = (unsigned int)&(printk),
+	.flags_1 = (unsigned int)&(_printk),
 };
 
 
