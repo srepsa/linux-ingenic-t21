@@ -387,6 +387,8 @@ struct gpio_chip {
 	int			(*set_config)(struct gpio_chip *gc,
 					      unsigned int offset,
 					      unsigned long config);
+	int			(*set_pull)(struct gpio_chip *chip,
+						unsigned offset, unsigned pull);
 	int			(*to_irq)(struct gpio_chip *gc,
 						unsigned int offset);
 

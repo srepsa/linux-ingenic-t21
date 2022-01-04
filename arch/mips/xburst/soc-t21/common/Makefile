@@ -15,7 +15,7 @@ obj-y += gpio.o
 # only for debug
 #obj-y += pmmon.o
 obj-y += irq.o
-obj-y += cpm_usb.o
+# obj-y += cpm_usb.o
 
 obj-y += platform.o
 

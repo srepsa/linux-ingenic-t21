@@ -21,6 +21,7 @@
 #include <soc/base.h>
 #include <soc/gpio.h>
 #include <soc/irq.h>
+#include <gpio.h>
 
 #if !defined CONFIG_GPIOLIB
 #error  "Need GPIOLIB !!!"
