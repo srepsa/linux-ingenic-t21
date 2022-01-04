@@ -65,12 +65,12 @@ struct tmr_src {
 	struct clk *clk_gate;
 	unsigned int channel;
 };
-static cycle_t jz_get_cycles(struct clocksource *cs)
+static u64 jz_get_cycles(struct clocksource *cs)
 {
 	int i = 0xffffff;
 	union clycle_type
 	{
-		cycle_t cycle64;
+		u64 cycle64;
 		unsigned int cycle32[2];
 	} cycle;
 
@@ -131,7 +131,7 @@ static struct tmr_src tmr_src ={
 
 unsigned long long sched_clock(void)
 {
-	return ((cycle_t)jz_get_cycles(0) * tmr_src.cs.mult) >> tmr_src.cs.shift;
+	return ((u64)jz_get_cycles(0) * tmr_src.cs.mult) >> tmr_src.cs.shift;
 }
 
 void jz_clocksource_init(void)
