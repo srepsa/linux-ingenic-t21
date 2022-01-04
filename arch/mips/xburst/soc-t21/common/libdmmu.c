@@ -94,7 +94,7 @@ static unsigned int get_pfn(unsigned int vaddr)
 	pmdir = pmd_offset((pud_t *)pgdir, vaddr);
 	if(pmd_none(*pmdir) || pmd_bad(*pmdir))
 		return 0;
-	pte = pte_offset(pmdir,vaddr);
+	pte = pte_offset_kernel(pmdir,vaddr);
 	if (pte_present(*pte)) {
 		return pte_pfn(*pte) << PAGE_SHIFT;
 	}
