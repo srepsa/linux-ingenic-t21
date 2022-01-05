@@ -6,7 +6,6 @@ choice
 
 config CHIP_T21
        bool "chip-t21"
-       select TRACEPOINTS
        select SYS_SUPPORTS_HIGHMEM
        select GENERIC_CLOCKEVENTS_BROADCAST
 
