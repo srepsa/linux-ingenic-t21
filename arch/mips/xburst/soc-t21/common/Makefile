@@ -5,6 +5,7 @@
 obj-y += setup.o
 obj-y += reset.o
 obj-y += timer_sys_ost.o
+obj-y += debug.o  # Jim's debug stuff
 #obj-y += timer_tcu.o
 #maintimer.o cpu0timer.o cpu1timer.o
 obj-y += serial.o
