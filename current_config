@@ -1222,6 +1222,7 @@ CONFIG_BCMA_POSSIBLE=y
 #
 # Multifunction device drivers
 #
+CONFIG_MFD_CORE=y
 # CONFIG_MFD_ACT8945A is not set
 # CONFIG_MFD_AS3711 is not set
 # CONFIG_MFD_AS3722 is not set
@@ -1249,6 +1250,7 @@ CONFIG_BCMA_POSSIBLE=y
 # CONFIG_HTC_I2CPLD is not set
 # CONFIG_MFD_IQS62X is not set
 # CONFIG_MFD_KEMPLD is not set
+CONFIG_MFD_JZ_TCU=y
 # CONFIG_MFD_88PM800 is not set
 # CONFIG_MFD_88PM805 is not set
 # CONFIG_MFD_88PM860X is not set
