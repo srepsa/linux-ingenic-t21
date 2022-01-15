@@ -51,6 +51,8 @@
 #include <linux/uaccess.h>
 #include <asm/sections.h>
 
+#include <debug.h>
+
 #include <trace/events/initcall.h>
 #define CREATE_TRACE_POINTS
 #include <trace/events/printk.h>
@@ -2119,7 +2121,8 @@ int vprintk_store(int facility, int level,
 	 * close to the call of printk(). This provides a more deterministic
 	 * timestamp with respect to the caller.
 	 */
-	ts_nsec = local_clock();
+	// ts_nsec = local_clock();  // REMOVE TEMPORARILY
+	ts_nsec = 10000;
 
 	if (!printk_enter_irqsave(recursion_ptr, irqflags))
 		return 0;
