@@ -26,6 +26,8 @@
 #include <soc/extal.h>
 #include <jz_proc.h>
 
+#include <debug.h>
+
 #include "clk.h"
 /*
  *  unit: kHz
@@ -128,7 +130,7 @@ void __init init_all_clk(void)
 			clk_srcs[CLK_ID_H2CLK].rate/1000/1000,
 			clk_srcs[CLK_ID_PCLK].rate/1000/1000);
 }
-struct clk __attribute__((weak)) *clk_get(struct device *dev, const char *id)
+struct clk *clk_get(struct device *dev, const char *id)
 {
 	int i;
 	struct clk *retval = NULL;
@@ -139,8 +141,15 @@ struct clk __attribute__((weak)) *clk_get(struct device *dev, const char *id)
 			if(clk_srcs[i].flags & CLK_FLG_NOALLOC)
 				return &clk_srcs[i];
 			retval = kzalloc(sizeof(struct clk),GFP_KERNEL);
-			if(!retval)
+
+			/* TODO: why does this trigger even if theres nonNULL ptr?? 
+			if(retval == NULL)
+				WHEREAMI
+				dump_stack();
+				printk("kzalloc() failed!\n");
+				// panic("bug");
 				return ERR_PTR(-ENODEV);
+			*/
 			memcpy(retval,&clk_srcs[i],sizeof(struct clk));
 			retval->source = &clk_srcs[i];
 			if(CLK_FLG_RELATIVE & clk_srcs[i].flags)
@@ -154,7 +163,7 @@ struct clk __attribute__((weak)) *clk_get(struct device *dev, const char *id)
 	}
 	return ERR_PTR(-EINVAL);
 }
-//EXPORT_SYMBOL(clk_get);
+EXPORT_SYMBOL(clk_get);
 
 int clk_enable(struct clk *clk)
 {
@@ -238,7 +247,7 @@ unsigned long clk_get_rate(struct clk *clk)
 }
 EXPORT_SYMBOL(clk_get_rate);
 
-void __attribute__((weak)) clk_put(struct clk *clk)
+void clk_put(struct clk *clk)
 {
 	struct clk *parent_clk;
 	if(clk && !(clk->flags & CLK_FLG_NOALLOC)) {
@@ -256,7 +265,7 @@ void __attribute__((weak)) clk_put(struct clk *clk)
 		kfree(clk);
 	}
 }
-//EXPORT_SYMBOL(clk_put);
+EXPORT_SYMBOL(clk_put);
 
 int clk_set_rate(struct clk *clk, unsigned long rate)
 {
