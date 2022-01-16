@@ -217,6 +217,9 @@
 /* Freescale lpuart */
 #define PORT_LPUART	103
 
+/* Ingenic JZ47XX */
+#define PORT_JZ47XX     103
+
 /* SH-SCI */
 #define PORT_HSCIF	104
 

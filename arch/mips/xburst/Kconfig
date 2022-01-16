@@ -18,6 +18,9 @@ config SOC_T21
 	select JZMMC_V12_MMC0_PB_4BIT
 	select JZMMC_V12_SDMA
 	select JZMMC_V12_MMC0
+	select SERIAL_JZ47XX_UART
+	select SERIAL_JZ47XX_CONSOLE
+	select SERIAL_JZ47XX_UART1
 
 endchoice
 
