@@ -4,6 +4,7 @@
 #
 
 obj-$(CONFIG_MMC_ARMMMCI) += armmmci.o
+obj-$(CONFIG_JZMMC_V12)		+= jzmmc_v12.o
 armmmci-y := mmci.o
 armmmci-$(CONFIG_MMC_QCOM_DML) += mmci_qcom_dml.o
 armmmci-$(CONFIG_MMC_STM32_SDMMC) += mmci_stm32_sdmmc.o
