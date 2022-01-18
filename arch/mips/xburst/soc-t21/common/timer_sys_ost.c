@@ -62,6 +62,9 @@
 	                     \
 	     _res_;              \
 	 })
+
+extern char time_is_setup;
+
 struct tmr_src {
 	struct clocksource cs;
 	struct clk *clk_gate;
@@ -75,6 +78,10 @@ static u64 jz_get_cycles(struct clocksource *cs)
 		u64 cycle64;
 		unsigned int cycle32[2];
 	} cycle;
+
+	// TODO: Check in a better way (without global flag) whether timer is up yet
+	// if (!(ost_readl(OST_TER) & (1 << CLKSOURCE_CH))) return 0;
+	if (!time_is_setup) return 0;
 
 	do{
 		i --;

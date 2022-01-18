@@ -117,6 +117,12 @@ static int kernel_init(void *);
 extern void init_IRQ(void);
 extern void radix_tree_init(void);
 
+/* For now, use this global variable to flag that time has not been
+ * initialized yet.
+ * TODO: do this in a proper, clean way
+ */
+char time_is_setup;
+
 /*
  * Debug helper: via this flag we know that we are in 'early bootup code'
  * where only the boot processor is running with IRQ disabled.  This means
@@ -932,6 +938,8 @@ asmlinkage __visible void __init __no_sanitize_address start_kernel(void)
 {
 	char *command_line;
 	char *after_dashes;
+
+	time_is_setup = 0;
 
 	set_task_stack_end_magic(&init_task);
 	smp_setup_processor_id();

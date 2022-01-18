@@ -2121,8 +2121,7 @@ int vprintk_store(int facility, int level,
 	 * close to the call of printk(). This provides a more deterministic
 	 * timestamp with respect to the caller.
 	 */
-	// ts_nsec = local_clock();  // REMOVE TEMPORARILY
-	ts_nsec = 10000;
+	ts_nsec = local_clock();
 
 	if (!printk_enter_irqsave(recursion_ptr, irqflags))
 		return 0;

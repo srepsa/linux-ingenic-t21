@@ -21,6 +21,8 @@
 #include <soc/extal.h>
 #include <mach/platform.h>
 
+extern char time_is_setup;
+
 void __init cpm_reset(void)
 {
 #ifndef CONFIG_FPGA_TEST
@@ -73,4 +75,5 @@ void __init plat_time_init(void)
 {
 	jzcpu_timer_setup();
 	jz_clocksource_init();
+	time_is_setup = 1;
 }
