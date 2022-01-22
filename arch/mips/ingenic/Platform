@@ -1,0 +1,6 @@
+#
+# Ingenic
+#
+
+cflags-$(CONFIG_MACH_T21)		+= -I$(srctree)/arch/mips/include/asm/mach-t21
+load-$(CONFIG_MACH_T21)		= 0xffffffff80010000
